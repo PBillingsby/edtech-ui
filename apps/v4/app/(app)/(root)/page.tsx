@@ -1,7 +1,7 @@
+import { IconArrowRight } from "@tabler/icons-react"
 import { type Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { IconArrowRight } from "@tabler/icons-react"
 
 import { Announcement } from "@/components/announcement"
 import {
@@ -12,12 +12,11 @@ import {
 } from "@/components/page-header"
 import { Button } from "@/styles/radix-nova/ui/button"
 
-import { CardsDemo } from "./cards"
+import LessonShowcasePage from "./lesson-cards"
 
-const title = "The Foundation for your Design System"
+const title = "Interactive Components for EdTech"
 const description =
-  "A set of beautifully designed components that you can customize, extend, and build on. Start here then make it your own. Open Source. Open Code."
-
+  "A purpose-built library of lesson interaction components, extracted from patterns in leading learning products. Drop them into a lesson, theme to your brand, and extend without touching the core system."
 export const dynamic = "force-static"
 export const revalidate = false
 
@@ -81,7 +80,7 @@ export default function IndexPage() {
             />
           </section>
           <section className="hidden md:block">
-            <CardsDemo />
+            <LessonShowcasePage />
           </section>
         </div>
       </div>
