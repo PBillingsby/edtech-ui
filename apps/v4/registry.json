@@ -2314,6 +2314,214 @@
       "categories": ["charts", "charts-tooltip"]
     },
     {
+      "lesson-variants": {
+        "name": "lesson-variants",
+        "type": "registry:lib",
+        "dependencies": ["class-variance-authority"],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/variants.ts",
+            "type": "registry:lib",
+            "target": "components/lesson/variants.ts"
+          }
+        ]
+      },
+
+      "use-feedback": {
+        "name": "use-feedback",
+        "type": "registry:hook",
+        "registryDependencies": ["lesson-variants", "utils"],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/use-feedback.ts",
+            "type": "registry:hook",
+            "target": "components/lesson/use-feedback.ts"
+          }
+        ]
+      },
+
+      "lesson-card": {
+        "name": "lesson-card",
+        "type": "registry:ui",
+        "registryDependencies": ["utils"],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/lesson-card.tsx",
+            "type": "registry:ui",
+            "target": "components/lesson/lesson-card.tsx"
+          }
+        ]
+      },
+
+      "lesson-button": {
+        "name": "lesson-button",
+        "type": "registry:ui",
+        "dependencies": ["class-variance-authority"],
+        "registryDependencies": ["lesson-variants", "utils"],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/lesson-button.tsx",
+            "type": "registry:ui",
+            "target": "components/lesson/lesson-button.tsx"
+          }
+        ]
+      },
+
+      "lesson-text": {
+        "name": "lesson-text",
+        "type": "registry:ui",
+        "registryDependencies": ["button", "card"],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/lesson-text.tsx",
+            "type": "registry:ui",
+            "target": "components/lesson/lesson-text.tsx"
+          }
+        ]
+      },
+
+      "multiple-choice": {
+        "name": "multiple-choice",
+        "type": "registry:ui",
+        "dependencies": ["lucide-react"],
+        "registryDependencies": [
+          "lesson-button",
+          "lesson-card",
+          "use-feedback",
+          "lesson-variants",
+          "utils"
+        ],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/multiple-choice.tsx",
+            "type": "registry:ui",
+            "target": "components/lesson/multiple-choice.tsx"
+          }
+        ]
+      },
+
+      "linear-graph": {
+        "name": "linear-graph",
+        "type": "registry:ui",
+        "dependencies": ["lucide-react"],
+        "registryDependencies": [
+          "lesson-button",
+          "lesson-card",
+          "use-feedback",
+          "lesson-variants",
+          "slider",
+          "utils"
+        ],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/linear-graph.tsx",
+            "type": "registry:ui",
+            "target": "components/lesson/linear-graph.tsx"
+          }
+        ]
+      },
+
+      "percentage-bar": {
+        "name": "percentage-bar",
+        "type": "registry:ui",
+        "dependencies": ["lucide-react"],
+        "registryDependencies": [
+          "lesson-button",
+          "lesson-card",
+          "use-feedback",
+          "lesson-variants",
+          "utils"
+        ],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/percentage-bar.tsx",
+            "type": "registry:ui",
+            "target": "components/lesson/percentage-bar.tsx"
+          }
+        ]
+      },
+
+      "fraction": {
+        "name": "fraction",
+        "type": "registry:ui",
+        "dependencies": ["lucide-react"],
+        "registryDependencies": [
+          "lesson-button",
+          "lesson-card",
+          "use-feedback",
+          "lesson-variants",
+          "utils"
+        ],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/fraction.tsx",
+            "type": "registry:ui",
+            "target": "components/lesson/fraction.tsx"
+          }
+        ]
+      },
+
+      "coordinate-plane": {
+        "name": "coordinate-plane",
+        "type": "registry:ui",
+        "dependencies": ["lucide-react"],
+        "registryDependencies": [
+          "lesson-button",
+          "lesson-card",
+          "use-feedback",
+          "lesson-variants",
+          "utils"
+        ],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/coordinate-plane.tsx",
+            "type": "registry:ui",
+            "target": "components/lesson/coordinate-plane.tsx"
+          }
+        ]
+      },
+
+      "ratio-picker": {
+        "name": "ratio-picker",
+        "type": "registry:ui",
+        "dependencies": ["lucide-react"],
+        "registryDependencies": [
+          "lesson-button",
+          "lesson-card",
+          "use-feedback",
+          "lesson-variants",
+          "utils"
+        ],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/ratio-picker.tsx",
+            "type": "registry:ui",
+            "target": "components/lesson/ratio-picker.tsx"
+          }
+        ]
+      },
+
+      "tile-counter": {
+        "name": "tile-counter",
+        "type": "registry:ui",
+        "dependencies": ["lucide-react"],
+        "registryDependencies": [
+          "lesson-button",
+          "lesson-card",
+          "use-feedback",
+          "lesson-variants",
+          "utils"
+        ],
+        "files": [
+          {
+            "path": "registry/new-york-v4/lesson/tile-counter.tsx",
+            "type": "registry:ui",
+            "target": "components/lesson/tile-counter.tsx"
+          }
+        ]
+      }
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "dependencies": ["clsx", "tailwind-merge"],
