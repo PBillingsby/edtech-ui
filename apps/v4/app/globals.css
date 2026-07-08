@@ -70,6 +70,15 @@
   --color-code-number: var(--code-number);
   --color-selection: var(--selection);
   --color-selection-foreground: var(--selection-foreground);
+  --color-selection-foreground: var(--selection-foreground);
+
+  --color-lesson-paper: var(--lesson-paper);
+  --color-lesson-card: var(--lesson-card);
+  --color-lesson-ink: var(--lesson-ink);
+  --color-lesson-accent: var(--lesson-accent);
+  --color-lesson-success: var(--lesson-success);
+  --color-lesson-error: var(--lesson-error);
+  --radius-lesson: var(--lesson-radius);
 }
 
 :root {
@@ -114,6 +123,13 @@
   --code-number: oklch(0.56 0 0);
   --selection: oklch(0% 0 0);
   --selection-foreground: oklch(1 0 0);
+  --lesson-paper: #f2f4f7;
+  --lesson-card: #ffffff;
+  --lesson-ink: #1e3a5f;
+  --lesson-accent: #f5a623;
+  --lesson-success: #2f9e44;
+  --lesson-error: #d64545;
+  --lesson-radius: 9999px;
 }
 
 .dark {
@@ -417,4 +433,33 @@
   .dialog-ring {
     @apply rounded-xl border-none bg-clip-padding shadow-2xl ring-4 ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800;
   }
+}
+
+[data-lesson-brand="acme"] {
+  --lesson-ink: #2d0a4e;
+  --lesson-accent: #ff5a5f;
+  --lesson-radius: 0.5rem;
+}
+
+@keyframes lesson-shake {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  20% {
+    transform: translateX(-7px) rotate(-1deg);
+  }
+  40% {
+    transform: translateX(7px) rotate(1deg);
+  }
+  60% {
+    transform: translateX(-5px) rotate(-0.5deg);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+.lesson-shake {
+  animation: lesson-shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
