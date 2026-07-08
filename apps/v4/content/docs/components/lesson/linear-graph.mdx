@@ -1,0 +1,154 @@
+---
+title: Linear Graph
+description: A slider-driven graph interaction where a point tracks a linear relationship live, with a fill bar reflecting the y-value in real time.
+component: true
+---
+
+## Usage
+
+```tsx
+import { LinearGraph } from "@/components/lesson/linear-graph"
+```
+
+```tsx
+<LinearGraph
+  question="Find the volume when there are 2 rocks."
+  xLabel="Rocks"
+  yLabel="Volume"
+  data={[
+    { x: 0, y: 0 },
+    { x: 1, y: 10 },
+    { x: 2, y: 20 },
+    { x: 3, y: 30 },
+    { x: 4, y: 40 },
+  ]}
+  correctX={2}
+  explanation="Each rock adds 10 units. 2 × 10 = 20."
+/>
+```
+
+## Installation
+
+Copy the following files into your project.
+
+**Required files:**
+
+```
+components/lesson/linear-graph.tsx
+components/lesson/lesson-card.tsx
+components/lesson/lesson-button.tsx
+components/lesson/variants.ts
+components/lesson/use-feedback.ts
+```
+
+**Required dependency:**
+
+```bash
+npx shadcn@latest add graph
+```
+
+## How it works
+
+Pass a `data` array containing all the points that define the relationship — including the point at `correctX`. The component infers everything else automatically:
+
+- **Slope and intercept** — calculated via linear regression on the data points.
+- **X and Y ranges** — derived from the min/max values in the data.
+- **Tick steps** — computed to produce clean, readable axis labels.
+- **Previously answered points** — any point with `x < correctX` is shown on the graph as a confirmed answer, building context for the learner.
+
+The slider controls the x value. As it moves, the active point tracks the computed y value along the line, and the fill bar on the right reflects the y value proportionally.
+
+## Examples
+
+### Basic
+
+```tsx
+<LinearGraph
+  question="Find the volume when there are 2 rocks."
+  xLabel="Rock"
+  yLabel="Volume"
+  data={[
+    { x: 0, y: 0 },
+    { x: 1, y: 10 },
+    { x: 2, y: 20 },
+    { x: 3, y: 30 },
+    { x: 4, y: 40 },
+  ]}
+  correctX={2}
+/>
+```
+
+### With previous context points
+
+Points with `x < correctX` are automatically shown on the graph. Use this to build up a lesson progressively — each question shows the confirmed answers from previous steps.
+
+```tsx
+// Step 1: no previous points (x=0 is the first)
+<LinearGraph
+  question="Find the volume when there is 1 rock."
+  data={[{ x: 0, y: 0 }, { x: 1, y: 10 }, { x: 2, y: 20 }]}
+  correctX={1}
+/>
+
+// Step 2: x=1 is now a confirmed previous point
+<LinearGraph
+  question="Find the volume when there are 2 rocks."
+  data={[{ x: 0, y: 0 }, { x: 1, y: 10 }, { x: 2, y: 20 }]}
+  correctX={2}
+/>
+```
+
+### With continue callback
+
+```tsx
+<LinearGraph
+  question="Find the volume when there are 2 rocks."
+  xLabel="Rocks"
+  yLabel="Volume"
+  data={data}
+  correctX={2}
+  onContinue={() => setStep((s) => s + 1)}
+/>
+```
+
+### Non-zero intercept
+
+The component handles any linear relationship, including those that don't pass through the origin.
+
+```tsx
+<LinearGraph
+  question="Find the temperature after 3 hours."
+  xLabel="Hours"
+  yLabel="Temp (°C)"
+  data={[
+    { x: 0, y: 20 },
+    { x: 1, y: 23 },
+    { x: 2, y: 26 },
+    { x: 3, y: 29 },
+    { x: 4, y: 32 },
+  ]}
+  correctX={3}
+  explanation="Starting at 20°C and rising 3° per hour: 20 + (3 × 3) = 29."
+/>
+```
+
+## Props
+
+### LinearGraph
+
+| Prop          | Type           | Default     | Description                                                                                                                |
+| ------------- | -------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `question`    | `string`       | —           | The question text displayed above the graph.                                                                               |
+| `xLabel`      | `string`       | —           | Label for the x-axis.                                                                                                      |
+| `yLabel`      | `string`       | —           | Label for the y-axis and fill bar.                                                                                         |
+| `data`        | `GraphPoint[]` | —           | All data points defining the relationship. Include the point at `correctX` — it will be hidden until the learner finds it. |
+| `correctX`    | `number`       | —           | The x value the learner must slide to.                                                                                     |
+| `explanation` | `string`       | `undefined` | Explanation shown when the user taps "Why?". If omitted, the Why button is hidden.                                         |
+| `onContinue`  | `() => void`   | `undefined` | Called when the user clicks Continue after a correct answer. If omitted, the component resets.                             |
+
+### GraphPoint
+
+| Prop | Type     | Description       |
+| ---- | -------- | ----------------- |
+| `x`  | `number` | The x coordinate. |
+| `y`  | `number` | The y coordinate. |

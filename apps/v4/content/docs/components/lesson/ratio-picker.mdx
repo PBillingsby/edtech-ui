@@ -1,0 +1,113 @@
+---
+title: Ratio Picker
+description: A color-mixing ratio table where the learner picks the missing count in a ratio, with a live mix swatch showing the result.
+component: true
+---
+
+## Usage
+
+```tsx
+import { RatioPicker } from "@/components/lesson/ratio-picker"
+```
+
+```tsx
+<RatioPicker
+  question="Set the amount of blue to make a darker shade."
+  color="blue"
+  ratio={[5, 2]}
+  blank="left"
+  options={[1, 3, 5]}
+  explanation="More blue relative to white makes the mix darker."
+/>
+```
+
+## Installation
+
+Copy the following files into your project.
+
+**Required files:**
+
+```
+components/lesson/ratio-picker.tsx
+components/lesson/lesson-card.tsx
+components/lesson/lesson-button.tsx
+components/lesson/variants.ts
+components/lesson/use-feedback.ts
+```
+
+## How it works
+
+A three-column table shows the primary color, white, and the resulting mix. One side of the ratio is blanked out; the learner picks the missing count from the chips.
+
+- **`ratio`** is the complete correct answer as `[left, right]`, where left is the color count and right is the white count.
+- **`blank`** chooses which side the learner fills in (`"left"` or `"right"`); the other side is shown.
+- **Mix swatch** — once both counts are known, the mix column blends the color with white in proportion, updating live.
+- **Check** passes when the selected chip equals the blanked side's value in `ratio`.
+
+## Examples
+
+### Fill the color side
+
+```tsx
+<RatioPicker
+  question="Set the amount of blue to make a darker shade."
+  color="blue"
+  ratio={[5, 2]}
+  blank="left"
+  options={[1, 3, 5]}
+/>
+```
+
+### Fill the white side
+
+```tsx
+<RatioPicker
+  question="Set the amount of white to make a lighter shade of red."
+  color="red"
+  ratio={[5, 4]}
+  blank="right"
+  options={[1, 2, 4]}
+  explanation="More white relative to red makes the mix lighter."
+/>
+```
+
+### Custom hex color
+
+`color` accepts a named color or any CSS hex string.
+
+```tsx
+<RatioPicker
+  question="Set the amount of teal to complete the ratio."
+  color="#3DC9B0"
+  ratio={[3, 1]}
+  blank="left"
+  options={[1, 2, 3, 4]}
+/>
+```
+
+### With continue callback
+
+```tsx
+<RatioPicker
+  question="Set the amount of blue to make a darker shade."
+  color="blue"
+  ratio={[5, 2]}
+  blank="left"
+  options={[1, 3, 5]}
+  onContinue={() => setStep((s) => s + 1)}
+/>
+```
+
+## Props
+
+### RatioPicker
+
+| Prop          | Type                | Default     | Description                                                                        |
+| ------------- | ------------------- | ----------- | ---------------------------------------------------------------------------------- |
+| `question`    | `string`            | —           | The question text displayed above the table.                                       |
+| `color`       | `string`            | —           | Named color (`blue`, `red`, `green`, `purple`, …) or any CSS hex string.           |
+| `ratio`       | `[number, number]`  | —           | The complete correct ratio as `[left, right]` — color count then white count.      |
+| `blank`       | `"left" \| "right"` | —           | Which side of the ratio the learner fills in.                                      |
+| `options`     | `number[]`          | —           | The number chips the learner can choose from.                                      |
+| `explanation` | `string`            | `undefined` | Explanation shown when the user taps "Why?". If omitted, the Why button is hidden. |
+| `onContinue`  | `() => void`        | `undefined` | Called when the user clicks Continue after a correct answer. If omitted, resets.   |

@@ -1,0 +1,92 @@
+---
+title: Percentage Bar
+description: A draggable bar where the learner fills to a target percentage, with a reference bar above showing the whole and a live value readout.
+component: true
+---
+
+## Usage
+
+```tsx
+import { PercentageBar } from "@/components/lesson/percentage-bar"
+```
+
+```tsx
+<PercentageBar
+  question="Fill the bar to show 25% of 80."
+  whole={80}
+  correctPercent={25}
+  explanation="25% means one quarter. A quarter of 80 is 20."
+/>
+```
+
+## Installation
+
+Copy the following files into your project.
+
+**Required files:**
+
+```
+components/lesson/percentage-bar.tsx
+components/lesson/lesson-card.tsx
+components/lesson/lesson-button.tsx
+components/lesson/variants.ts
+components/lesson/use-feedback.ts
+```
+
+## How it works
+
+The top bar is a fixed reference showing the `whole` at 100%. The bottom bar is interactive: the learner drags the handle — or clicks anywhere on the bar — to fill it to a percentage.
+
+- **Value readout** — as the bar fills, the current percentage and its value (`percent × whole`) update live.
+- **Segment dividers** — `segments` draws evenly spaced guide lines in both bars to help the learner estimate (defaults to 5, i.e. 20% steps).
+- **Check** — compares the filled percentage against `correctPercent` exactly.
+
+## Examples
+
+### Basic
+
+```tsx
+<PercentageBar
+  question="Fill the bar to show 25% of 80."
+  whole={80}
+  correctPercent={25}
+/>
+```
+
+### Custom segments
+
+Use `segments` to change the number of guide divisions. Four segments gives 25% steps.
+
+```tsx
+<PercentageBar
+  question="Fill the bar to show 75% of 20."
+  whole={20}
+  correctPercent={75}
+  segments={4}
+  explanation="75% is three quarters. Three quarters of 20 is 15."
+/>
+```
+
+### With continue callback
+
+```tsx
+<PercentageBar
+  question="Fill the bar to show 50% of 100."
+  whole={100}
+  correctPercent={50}
+  onContinue={() => setStep((s) => s + 1)}
+/>
+```
+
+## Props
+
+### PercentageBar
+
+| Prop             | Type         | Default     | Description                                                                        |
+| ---------------- | ------------ | ----------- | ---------------------------------------------------------------------------------- |
+| `question`       | `string`     | —           | The question text displayed above the bars.                                        |
+| `whole`          | `number`     | —           | The total value represented by the full reference bar.                             |
+| `correctPercent` | `number`     | —           | The target percentage the learner must fill to.                                    |
+| `segments`       | `number`     | `5`         | Number of evenly spaced guide divisions drawn in both bars.                        |
+| `explanation`    | `string`     | `undefined` | Explanation shown when the user taps "Why?". If omitted, the Why button is hidden. |
+| `onContinue`     | `() => void` | `undefined` | Called when the user clicks Continue after a correct answer. If omitted, resets.   |

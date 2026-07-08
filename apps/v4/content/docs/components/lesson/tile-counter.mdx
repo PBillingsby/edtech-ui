@@ -1,0 +1,99 @@
+---
+title: Tile Counter
+description: A counter-tile stimulus where the learner reads a display of positive and negative tiles and places the matching total value into a slot.
+component: true
+---
+
+## Usage
+
+```tsx
+import { TileCounter } from "@/components/lesson/tile-counter"
+```
+
+```tsx
+<TileCounter
+  question="Each positive tile has a value of 1. What is the total value shown?"
+  tiles={["+", "+", "+"]}
+  options={[0, 1, 2, 3]}
+  answer={3}
+  explanation="Three positive tiles, each worth 1, add up to 3."
+/>
+```
+
+## Installation
+
+Copy the following files into your project.
+
+**Required files:**
+
+```
+components/lesson/tile-counter.tsx
+components/lesson/lesson-card.tsx
+components/lesson/lesson-button.tsx
+components/lesson/variants.ts
+components/lesson/use-feedback.ts
+```
+
+## How it works
+
+The learner reads a read-only display of counter tiles, then places one numeric chip into the single answer slot. **Check** compares the placed value against `answer`.
+
+- **`tiles`** is an array of `"+"` and `"-"` shown as the stimulus. Positives render in the ink color, negatives in the error color.
+- **`answer`** is the correct total — supply it directly rather than deriving it, so the same component works whether or not negatives cancel.
+- Tap a chip to place it; tap the filled slot to clear it before checking.
+
+## Examples
+
+### Positives only
+
+```tsx
+<TileCounter
+  question="Each positive tile has a value of 1. What is the total value shown?"
+  tiles={["+", "+", "+"]}
+  options={[0, 1, 2, 3]}
+  answer={3}
+/>
+```
+
+### With cancelling
+
+When negatives cancel positives 1:1, set `answer` to the net value.
+
+```tsx
+<TileCounter
+  question="Each negative tile cancels one positive tile. What is the total value shown?"
+  tiles={["+", "-", "+", "-", "+"]}
+  options={[1, 2, 3, 5]}
+  answer={1}
+  explanation="Three positives and two negatives: two pairs cancel, leaving one positive = 1."
+/>
+```
+
+### With continue callback
+
+```tsx
+<TileCounter
+  question="Each positive tile has a value of 1. What is the total value shown?"
+  tiles={["+", "+", "+"]}
+  options={[0, 1, 2, 3]}
+  answer={3}
+  onContinue={() => setStep((s) => s + 1)}
+/>
+```
+
+## Props
+
+### TileCounter
+
+| Prop          | Type         | Default     | Description                                                                        |
+| ------------- | ------------ | ----------- | ---------------------------------------------------------------------------------- |
+| `question`    | `string`     | —           | The question text displayed above the tiles.                                       |
+| `tiles`       | `TileSign[]` | —           | The read-only counter tiles to show, each `"+"` or `"-"`.                          |
+| `options`     | `number[]`   | —           | The numeric answer chips the learner chooses from.                                 |
+| `answer`      | `number`     | —           | The correct total value.                                                           |
+| `explanation` | `string`     | `undefined` | Explanation shown when the user taps "Why?". If omitted, the Why button is hidden. |
+| `onContinue`  | `() => void` | `undefined` | Called when the user clicks Continue after a correct answer. If omitted, resets.   |
+
+### TileSign
+
+`"+" | "-"` — the value of a single counter tile.

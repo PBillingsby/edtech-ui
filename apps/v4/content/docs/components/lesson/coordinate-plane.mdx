@@ -1,0 +1,110 @@
+---
+title: Coordinate Plane
+description: A draggable point on a 2D grid that the learner moves to a target coordinate, with live crosshairs and a coordinate readout.
+component: true
+---
+
+## Usage
+
+```tsx
+import { CoordinatePlane } from "@/components/lesson/coordinate-plane"
+```
+
+```tsx
+<CoordinatePlane
+  question="Plot the point (3, 5)."
+  correctX={3}
+  correctY={5}
+  explanation="Move right 3 on the x-axis, then up 5 on the y-axis."
+/>
+```
+
+## Installation
+
+Copy the following files into your project.
+
+**Required files:**
+
+```
+components/lesson/coordinate-plane.tsx
+components/lesson/lesson-card.tsx
+components/lesson/lesson-button.tsx
+components/lesson/variants.ts
+components/lesson/use-feedback.ts
+```
+
+## How it works
+
+The learner drags the point across a snapped integer grid; crosshairs and a live `(x, y)` label track its position. **Check** passes when the point sits exactly on `(correctX, correctY)`.
+
+- **Grid range** — set with `xMin`/`xMax`/`yMin`/`yMax` (default 0–8 on both axes). The axis at 0 is drawn darker.
+- **Start position** — `startX`/`startY` place the point before the learner moves it (default `0, 0`). Check stays disabled until the point moves.
+- **Labels** — tick labels thin out automatically when a range is larger than 8.
+
+## Examples
+
+### Basic
+
+```tsx
+<CoordinatePlane
+  question="Plot the point (3, 5)."
+  correctX={3}
+  correctY={5}
+/>
+```
+
+### Custom range
+
+```tsx
+<CoordinatePlane
+  question="Plot the point (6, 8)."
+  xMin={0}
+  xMax={10}
+  yMin={0}
+  yMax={10}
+  correctX={6}
+  correctY={8}
+  explanation="Count 6 across and 8 up."
+/>
+```
+
+### Custom start position
+
+```tsx
+<CoordinatePlane
+  question="Move the point to (4, 2)."
+  startX={1}
+  startY={1}
+  correctX={4}
+  correctY={2}
+/>
+```
+
+### With continue callback
+
+```tsx
+<CoordinatePlane
+  question="Plot the point (3, 5)."
+  correctX={3}
+  correctY={5}
+  onContinue={() => setStep((s) => s + 1)}
+/>
+```
+
+## Props
+
+### CoordinatePlane
+
+| Prop          | Type         | Default     | Description                                                                        |
+| ------------- | ------------ | ----------- | ---------------------------------------------------------------------------------- |
+| `question`    | `string`     | —           | The question text displayed above the grid.                                        |
+| `correctX`    | `number`     | —           | Target x coordinate the learner must drag to.                                      |
+| `correctY`    | `number`     | —           | Target y coordinate the learner must drag to.                                      |
+| `xMin`        | `number`     | `0`         | Minimum x value on the grid.                                                       |
+| `xMax`        | `number`     | `8`         | Maximum x value on the grid.                                                       |
+| `yMin`        | `number`     | `0`         | Minimum y value on the grid.                                                       |
+| `yMax`        | `number`     | `8`         | Maximum y value on the grid.                                                       |
+| `startX`      | `number`     | `0`         | Starting x position of the point.                                                  |
+| `startY`      | `number`     | `0`         | Starting y position of the point.                                                  |
+| `explanation` | `string`     | `undefined` | Explanation shown when the user taps "Why?". If omitted, the Why button is hidden. |
+| `onContinue`  | `() => void` | `undefined` | Called when the user clicks Continue after a correct answer. If omitted, resets.   |

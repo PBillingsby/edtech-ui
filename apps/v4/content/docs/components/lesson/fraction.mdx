@@ -1,0 +1,144 @@
+---
+title: Fraction
+description: A tap-to-color shape split into equal segments, where the learner colors the fraction of the whole that matches a numerator over a denominator.
+component: true
+---
+
+## Usage
+
+```tsx
+import { Fraction, circleSegments } from "@/components/lesson/fraction"
+```
+
+```tsx
+<Fraction
+  question="Color 3/4 of the circle."
+  segments={circleSegments(4)}
+  numerator={3}
+  denominator={4}
+  explanation="3/4 means three of the four equal parts."
+/>
+```
+
+## Installation
+
+Copy the following files into your project.
+
+**Required files:**
+
+```
+components/lesson/fraction.tsx
+components/lesson/lesson-card.tsx
+components/lesson/lesson-button.tsx
+components/lesson/variants.ts
+components/lesson/use-feedback.ts
+```
+
+## How it works
+
+You supply `segments` as an array of SVG path strings — one path per equal part of the shape. The learner taps parts to color them; **Check** passes when the number colored equals `numerator / denominator` of the total.
+
+Rather than writing SVG paths by hand, use the exported shape helpers to generate them:
+
+- `circleSegments(n)` — a circle split into `n` equal pie slices.
+- `hexagonSegments()` — a hexagon split into 6 triangles.
+- `triangleQuarterSegments()` — a triangle split into 4 smaller triangles.
+- `compositeSixthsSegments()` — a rectangle split into 6 equal-area pieces.
+
+Keep `denominator` equal to `segments.length` so the target maps to whole segments.
+
+## Examples
+
+### Circle
+
+```tsx
+<Fraction
+  question="Color 3/4 of the circle."
+  segments={circleSegments(4)}
+  numerator={3}
+  denominator={4}
+/>
+```
+
+### Hexagon
+
+```tsx
+import { Fraction, hexagonSegments } from "@/components/lesson/fraction"
+
+<Fraction
+  question="Color 2/6 of the hexagon."
+  segments={hexagonSegments()}
+  numerator={2}
+  denominator={6}
+  explanation="2/6 means two of the six equal triangles."
+/>
+```
+
+### Triangle
+
+```tsx
+import { Fraction, triangleQuarterSegments } from "@/components/lesson/fraction"
+
+<Fraction
+  question="Color 1/4 of the triangle."
+  segments={triangleQuarterSegments()}
+  numerator={1}
+  denominator={4}
+/>
+```
+
+### Composite shape
+
+`compositeSixthsSegments()` mixes rectangles and triangles that are all equal in area — useful for showing that equal fractions don't have to be the same shape.
+
+```tsx
+import { Fraction, compositeSixthsSegments } from "@/components/lesson/fraction"
+
+<Fraction
+  question="Color 5/6 of the shape."
+  segments={compositeSixthsSegments()}
+  numerator={5}
+  denominator={6}
+/>
+```
+
+### With continue callback
+
+```tsx
+<Fraction
+  question="Color 3/4 of the circle."
+  segments={circleSegments(4)}
+  numerator={3}
+  denominator={4}
+  onContinue={() => setStep((s) => s + 1)}
+/>
+```
+
+## Props
+
+### Fraction
+
+| Prop          | Type           | Default         | Description                                                                        |
+| ------------- | -------------- | --------------- | ---------------------------------------------------------------------------------- |
+| `question`    | `string`       | —               | The question text displayed above the shape.                                       |
+| `segments`    | `SegmentDef[]` | —               | One SVG path per equal part of the shape. Generate with a shape helper.            |
+| `numerator`   | `number`       | —               | How many parts the learner must color.                                             |
+| `denominator` | `number`       | —               | The total number of parts. Should equal `segments.length`.                         |
+| `viewBox`     | `string`       | `"0 0 300 300"` | SVG viewBox for the shape.                                                         |
+| `explanation` | `string`       | `undefined`     | Explanation shown when the user taps "Why?". If omitted, the Why button is hidden. |
+| `onContinue`  | `() => void`   | `undefined`     | Called when the user clicks Continue after a correct answer. If omitted, resets.   |
+
+### SegmentDef
+
+| Prop   | Type     | Description                        |
+| ------ | -------- | ---------------------------------- |
+| `path` | `string` | SVG path data string for one part. |
+
+### Shape helpers
+
+| Helper                      | Returns            | Description                               |
+| --------------------------- | ------------------ | ----------------------------------------- |
+| `circleSegments(n)`         | `SegmentDef[]`     | Circle split into `n` equal pie slices.   |
+| `hexagonSegments()`         | `SegmentDef[]` (6) | Hexagon split into 6 triangles.           |
+| `triangleQuarterSegments()` | `SegmentDef[]` (4) | Triangle split into 4 smaller triangles.  |
+| `compositeSixthsSegments()` | `SegmentDef[]` (6) | Rectangle split into 6 equal-area pieces. |

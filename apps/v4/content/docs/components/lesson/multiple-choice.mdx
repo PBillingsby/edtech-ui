@@ -1,0 +1,134 @@
+---
+title: Interactive Question
+description: A question component with an image holder, 2x2 answer grid, and a full check/feedback/why cycle.
+base: base
+component: true
+---
+
+## Usage
+
+```tsx
+import { MultipleChoice } from "@/components/lesson/interactive-question"
+```
+
+```tsx
+<MultipleChoice
+  question="What's the weight of 1 square?"
+  options={[
+    { id: "a", label: "4", correct: false },
+    { id: "b", label: "8", correct: true },
+    { id: "c", label: "10", correct: false },
+    { id: "d", label: "16", correct: false },
+  ]}
+  explanation="40 split across 5 squares means each one weighs 8."
+/>
+```
+
+## Installation
+
+Copy the following files into your project.
+
+**Required files:**
+
+```
+components/lesson/interactive-question.tsx
+components/lesson/lesson-card.tsx
+components/lesson/lesson-button.tsx
+components/lesson/variants.ts
+components/lesson/use-feedback.ts
+```
+
+## Examples
+
+### With a prompt
+
+Use `prompt` for a short instructional line above the question.
+
+```tsx
+<MultipleChoice
+  prompt="The scale shows the weight of the items."
+  question="What's the weight of 1 square?"
+  options={[
+    { id: "a", label: "4", correct: false },
+    { id: "b", label: "8", correct: true },
+    { id: "c", label: "10", correct: false },
+    { id: "d", label: "16", correct: false },
+  ]}
+/>
+```
+
+### With an image
+
+Pass one or two images. Two images render side by side — useful for comparison questions.
+
+```tsx
+<MultipleChoice
+  question="Which scale is balanced?"
+  images={[
+    { src: "/scale-a.png", alt: "Scale A with 3 squares" },
+    { src: "/scale-b.png", alt: "Scale B with 1 circle" },
+  ]}
+  options={[
+    { id: "a", label: "Scale A", correct: false },
+    { id: "b", label: "Scale B", correct: true },
+    { id: "c", label: "Both", correct: false },
+    { id: "d", label: "Neither", correct: false },
+  ]}
+/>
+```
+
+### With algebraic options
+
+Options support plain strings — use unicode or standard notation for expressions.
+
+```tsx
+<MultipleChoice
+  question="What's the total weight on the scale?"
+  options={[
+    { id: "a", label: "c + 4", correct: false },
+    { id: "b", label: "c × 4", correct: true },
+    { id: "c", label: "c / 4", correct: false },
+    { id: "d", label: "c + c + c", correct: false },
+  ]}
+/>
+```
+
+### With continue callback
+
+`onContinue` fires when the user clicks Continue after a correct answer. Use this to advance a lesson runner.
+
+```tsx
+<MultipleChoice
+  question="What's the weight of 1 square?"
+  options={options}
+  onContinue={() => setStep((s) => s + 1)}
+/>
+```
+
+## Props
+
+### MultipleChoice
+
+| Prop          | Type             | Default     | Description                                                                                    |
+| ------------- | ---------------- | ----------- | ---------------------------------------------------------------------------------------------- |
+| `question`    | `string`         | —           | The question text displayed above the answer grid.                                             |
+| `options`     | `LessonOption[]` | —           | Array of answer choices. Must include exactly one with `correct: true`.                        |
+| `prompt`      | `string`         | `undefined` | Short instructional text shown above the question in muted style.                              |
+| `images`      | `LessonImage[]`  | `undefined` | One or two images shown between the question and the answer grid.                              |
+| `explanation` | `string`         | `undefined` | Explanation shown when the user taps "Why?". If omitted, the Why button is hidden.             |
+| `onContinue`  | `() => void`     | `undefined` | Called when the user clicks Continue after a correct answer. If omitted, the component resets. |
+
+### LessonOption
+
+| Prop      | Type      | Description                              |
+| --------- | --------- | ---------------------------------------- |
+| `id`      | `string`  | Unique identifier for this option.       |
+| `label`   | `string`  | The text displayed in the answer bubble. |
+| `correct` | `boolean` | Whether this is the correct answer.      |
+
+### LessonImage
+
+| Prop  | Type     | Description             |
+| ----- | -------- | ----------------------- |
+| `src` | `string` | Image source URL.       |
+| `alt` | `string` | Alt text for the image. |
