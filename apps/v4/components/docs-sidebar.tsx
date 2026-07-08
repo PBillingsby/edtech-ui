@@ -68,8 +68,8 @@ export function DocsSidebar({
   tree,
   ...props
 }: React.ComponentProps<typeof Sidebar> & { tree: typeof source.pageTree }) {
-  const pathname = usePathname()
-  const currentBase = getCurrentBase(pathname)
+  const pathname: string = usePathname()
+  const currentBase: string = getCurrentBase(pathname)
 
   return (
     <Sidebar

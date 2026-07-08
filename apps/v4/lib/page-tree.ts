@@ -29,12 +29,14 @@ export function getPagesFromFolder(
     for (const child of folder.children) {
       if (child.type === "folder") {
         // Match by $id or by name.
-        const isRadix = child.$id === "radix" || child.name === "Radix UI"
-        const isBase = child.$id === "base" || child.name === "Base UI"
+        const isRadix = child.$id === "components/radix" || child.name === "Radix UI"
+        const isBase = child.$id === "components/base" || child.name === "Base UI"
+        const isLesson = child.$id === "components/lesson" || child.name === "Lessons"
 
         if (
           (currentBase === "radix" && isRadix) ||
-          (currentBase === "base" && isBase)
+          (currentBase === "base" && isBase) ||
+          (currentBase === "lesson" && isLesson)
         ) {
           return child.children.filter(
             (c): c is PageTreePage => c.type === "page"
@@ -57,6 +59,6 @@ export function getPagesFromFolder(
 
 // Get current base (radix or base) from pathname.
 export function getCurrentBase(pathname: string): string {
-  const baseMatch = pathname.match(/\/docs\/components\/(radix|base)\//)
-  return baseMatch ? baseMatch[1] : "radix" // Default to radix.
+  const baseMatch = pathname.match(/\/docs\/components\/(radix|base|lesson)\//)
+  return baseMatch ? baseMatch[1] : "lesson" // Default to radix.
 }
